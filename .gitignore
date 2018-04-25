@@ -1,0 +1,10 @@
+# python compiled files
+__pycache__/
+*.py[cod]
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+venv
+.idea
