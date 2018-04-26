@@ -46,6 +46,8 @@ def take_input():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_p:
                 print(player.pos, player.direction)
+            if event.key == pygame.K_c:
+                world.add_cave(pygame.mouse.get_pos(), 50)
 
             # player movement
             if event.key == pygame.K_w:
@@ -71,16 +73,16 @@ def take_input():
 def logic():
     # player movement
     if player_mov == 1:
-        player.move()
+        player.move(caves=world.caves)
     if player_mov == -1:
-        player.move(-0.5)
+        player.move(-0.5, world.caves)
     player.rotate(player_rot)
 
 
 # TODO main menu
 
-player = mobs.Player([500, 500])
 world = world.WorldManager()
+player = mobs.Player([500, 500])
 
 while not crashed:
     draw()
