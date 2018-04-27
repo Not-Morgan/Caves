@@ -4,7 +4,7 @@ import mobs
 
 display_height = 1000
 display_width = 1000
-fps = 60
+fps = 45
 
 white = (255, 255, 255)
 black = (0, 0, 0)
@@ -30,12 +30,12 @@ class GameManager:
     def draw(self):
         self.gameDisplay.fill(black)
 
-        self.world_mgr.render(self.gameDisplay)
+        world_mgr.render(self.gameDisplay)
 
         # draw player
-        pygame.draw.circle(self.gameDisplay, blue, list(map(int, self.player.pos)), 7, 0)
+        pygame.draw.circle(self.gameDisplay, blue, list(map(int, player.pos)), 7, 0)
 
-        self.mob_mgr.render(self.gameDisplay)
+        mob_mgr.render(self.gameDisplay)
 
         pygame.display.update()
         self.clock.tick(fps)
@@ -49,10 +49,12 @@ class GameManager:
                 if event.key == pygame.K_p:
                     print(self.player.pos, self.player.direction)
                 if event.key == pygame.K_c:
-                    self.world_mgr.add_cave(pygame.mouse.get_pos(), 50)
+                    world_mgr.add_cave(pygame.mouse.get_pos(), 50)
 
                 if event.key == pygame.K_SPACE:
-                    self.player.throw_bomb()
+                    player.shoot()
+                if event.key == pygame.K_e:
+                    player.throw_bomb()
 
                 # player movement
                 if event.key == pygame.K_w:
@@ -77,12 +79,12 @@ class GameManager:
     def logic(self):
         # player movement
         if self.player_mov == 1:
-            self.player.move()
+            player.move()
         if self.player_mov == -1:
-            self.player.move(-0.5)
-        self.player.rotate(self.player_rot)
+            player.move(-0.5)
+        player.rotate(self.player_rot)
 
-        self.mob_mgr.move_all()
+        mob_mgr.move_all()
 
     def mainloop(self):
         while not self.crashed:
@@ -90,12 +92,19 @@ class GameManager:
             self.take_input()
             self.logic()
 
-    def start(self):
-        self.world_mgr = world.WorldManager()
-        self.player = mobs.Player([500, 500])
-        self.mob_mgr = mobs.MobManager()
-
-        self.mainloop()
-
 
 game_mgr = GameManager()
+world_mgr = None
+player = None
+mob_mgr = None
+
+
+def start():
+    global world_mgr
+    global player
+    global mob_mgr
+    world_mgr = world.WorldManager()
+    player = mobs.Player([500, 500])
+    mob_mgr = mobs.MobManager()
+
+    game_mgr.mainloop()

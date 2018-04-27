@@ -1,3 +1,3 @@
 import game
 
-game.game_mgr.start()
+game.start()

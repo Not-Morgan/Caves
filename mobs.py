@@ -1,14 +1,17 @@
 import pygame
 import extra_math as math
 import game
+from random import randint
 
 
 class Mob:
     direction = 0
     speed = 1
+    size = 7
 
     def __init__(self, pos):
         self.pos = pos
+        self.colour = game.blue
 
     def move(self, dist=None):
         if dist is None:
@@ -19,7 +22,7 @@ class Mob:
         self.pos[1] += math.sin(math.radians(self.direction)) * dist
 
         # undo if you went into a wall
-        if not math.in_circles(self.pos, game.game_mgr.world_mgr.caves):
+        if not math.in_circles(self.pos, game.world_mgr.caves):
             self.pos[0] -= math.cos(math.radians(self.direction)) * dist
             self.pos[1] -= math.sin(math.radians(self.direction)) * dist
 
@@ -34,17 +37,24 @@ class Enemy(Mob):
 
 class Player(Mob):
     bombs = []
+    speed = 1.5
 
     def __init__(self, pos):
         super().__init__(pos)
 
+    def shoot(self):
+        for i in range(5):
+            game.mob_mgr.new_mob(Bullet, [self.pos[0], self.pos[1]], self.direction + randint(-10, 10))
+
     def throw_bomb(self):
-        game.game_mgr.mob_mgr.new_mob(Bomb, [self.pos[0], self.pos[1]], self.direction)
+        game.mob_mgr.new_mob(Bomb, [self.pos[0], self.pos[1]], self.direction)
 
 
 class Bomb(Mob):
     wait_time = 1000
     radius = 25
+    speed = 2
+    size = 4
 
     def __init__(self, pos, direction):
         super().__init__(pos)
@@ -61,12 +71,25 @@ class Bomb(Mob):
             return True
 
     def explode(self):
-        game.game_mgr.world_mgr.add_cave(self.pos, self.radius)
+        game.world_mgr.add_cave(self.pos, self.radius)
 
 
-# TODO
 class Bullet(Mob):
-    pass
+    wait_time = 1200
+    speed = 5
+    size = 2
+
+    def __init__(self, pos, direction):
+        super().__init__(pos)
+        self.direction = direction
+        self.create_time = pygame.time.get_ticks()
+
+    def exist(self):
+        if pygame.time.get_ticks() - self.create_time > self.wait_time:
+            return False
+        else:
+            super().move(self.speed)
+            return True
 
 
 class MobManager:
@@ -89,7 +112,7 @@ class MobManager:
 
     def render(self, gameDisplay):
         for i in self.items:
-            pygame.draw.circle(gameDisplay, (0, 0, 255), list(map(int, i.pos)), 4, 0)
+            pygame.draw.circle(gameDisplay, i.colour, list(map(int, i.pos)), i.size, 0)
 
         for e in self.enemies:
-            pygame.draw.circle(gameDisplay, (255, 0, 0), list(map(int, e.pos)), 4, 0)
+            pygame.draw.circle(gameDisplay, (255, 0, 0), list(map(int, e.pos)), e.size, 0)
