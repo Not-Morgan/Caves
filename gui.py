@@ -6,6 +6,7 @@ black = (0, 0, 0)
 
 mouse = pygame.mouse.get_pos()
 font = pygame.font.SysFont(None, 17)
+pygame.font.init()
 
 
 def center_text(screen, text, x, y):
