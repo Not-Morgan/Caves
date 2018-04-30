@@ -36,7 +36,7 @@ class Enemy(Mob):
 
 
 class Player(Mob):
-    bombs = []
+    bombs = 10
     speed = 1.5
 
     def __init__(self, pos):
@@ -48,6 +48,7 @@ class Player(Mob):
 
     def throw_bomb(self):
         game.mob_mgr.new_mob(Bomb, [self.pos[0], self.pos[1]], self.direction)
+        self.bombs -= 1
 
 
 class Bomb(Mob):
@@ -75,7 +76,7 @@ class Bomb(Mob):
 
 
 class Bullet(Mob):
-    wait_time = 1200
+    wait_time = 1000
     speed = 5
     size = 2
 
