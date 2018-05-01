@@ -40,6 +40,7 @@ class Enemy(Mob):
             self.rotate(randint(-10, 10))
         else:
             self.direction = math.angle_between(self.pos, game.game_mgr.player)
+        return True
 
 
 class Player(Mob):
@@ -79,7 +80,7 @@ class Bomb(Mob):
             return True
 
     def explode(self):
-        game.world_mgr.add_cave(self.pos, self.radius)
+        game.world_mgr.add_hole(self.pos, self.radius)
 
 
 class Bullet(Mob):
