@@ -30,14 +30,10 @@ while not started:
         if event.type == pygame.QUIT:
             pygame.quit()
             quit()
+        if event.type == pygame.KEYDOWN:
+            started = True
     draw_menu()
     pygame.display.update()
     game.game_mgr.clock.tick(60)
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
 
 game.start()

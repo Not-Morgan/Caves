@@ -49,7 +49,7 @@ class GameManager:
                 if event.key == pygame.K_p:
                     print(self.player.pos, self.player.direction)
                 if event.key == pygame.K_c:
-                    world_mgr.add_cave(pygame.mouse.get_pos(), 50)
+                    mob_mgr.new_mob(mobs.Enemy, [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]])
 
                 if event.key == pygame.K_SPACE:
                     player.shoot()
