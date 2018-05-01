@@ -18,6 +18,7 @@ started = False
 
 
 def draw_menu():
+    gameDisplay.fill(game.white)
     myfont = pygame.font.SysFont('Comic Sans MS', 30)
     textsurface = myfont.render('Some Text', False, (0, 0, 0))
     gameDisplay.blit(textsurface, (0, 0))
