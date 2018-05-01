@@ -39,4 +39,4 @@ while True:
             pygame.quit()
             quit()
 
-game.start()
+# game.start()
