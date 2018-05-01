@@ -25,14 +25,21 @@ class Mob:
         if not math.in_circles(self.pos, game.world_mgr.caves):
             self.pos[0] -= math.cos(math.radians(self.direction)) * dist
             self.pos[1] -= math.sin(math.radians(self.direction)) * dist
+            return True
+        return False
 
     def rotate(self, degrees):
         self.direction = (self.direction + degrees) % 360
 
 
-# TODO enemies
 class Enemy(Mob):
-    pass
+    def exist(self):
+        if True:
+            if self.move():
+                self.rotate(180)
+            self.rotate(randint(-10, 10))
+        else:
+            self.direction = math.angle_between(self.pos, game.game_mgr.player)
 
 
 class Player(Mob):
@@ -90,6 +97,9 @@ class Bullet(Mob):
             return False
         else:
             super().move(self.speed)
+            for i in game.mob_mgr.enemies:
+                if math.hypo(self.pos, i.pos) < 10:
+                    game.mob_mgr.remove(i)
             return True
 
 
@@ -104,6 +114,10 @@ class MobManager:
         for i in self.items:
             if not i.exist():
                 self.items.remove(i)
+
+        for i in self.enemies:
+            if not i.exist():
+                self.enemies.remove(i)
 
     def new_mob(self, mob, *args):
         if mob is Enemy:
