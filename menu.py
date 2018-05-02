@@ -38,6 +38,10 @@ while not started:
         if event.type == pygame.QUIT:
             pygame.quit()
             quit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                game.start()
+                pygame.quit()
     draw_menu()
     pygame.display.update()
     game.game_mgr.clock.tick(60)
