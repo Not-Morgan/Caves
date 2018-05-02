@@ -2,6 +2,8 @@ import pygame
 import game
 from gui import *
 
+pygame.font.init()
+
 # define colours of the buttons
 
 dim_red = (200, 0, 0)
@@ -16,13 +18,19 @@ gameDisplay = game.game_mgr.gameDisplay
 pygame.display.set_caption('Welcome')
 started = False
 
-
 def draw_menu():
     gameDisplay.fill(game.white)
-    myfont = pygame.font.SysFont('Comic Sans MS', 30)
-    textsurface = myfont.render('Some Text', False, (0, 0, 0))
-    gameDisplay.blit(textsurface, (0, 0))
-    # display_buttons(gameDisplay, [100, 100, 10, 10], 'Start', green, dim_green)
+    font = pygame.font.SysFont(None, 17)
+    text = font.render('Welcome to Caves !', False, (0, 0, 0))
+    gameDisplay.blit(text, (10, 10))
+
+    display_buttons(gameDisplay, [100, 100, 75, 50], 'Start', green, dim_green)
+
+    # mouse = pygame.mouse.get_pos()
+    # text = pygame.font.SysFont(None, 17).render("Click to Start", True, black)
+    title = pygame.font.SysFont(None, 50)\
+        .render("Snake Thing Game", False, black)
+    center_text(gameDisplay, "Snake Thing Game", 500, 100, 50)
 
 
 while not started:
@@ -36,14 +44,5 @@ while not started:
     pygame.display.update()
     game.game_mgr.clock.tick(60)
 
-<<<<<<< HEAD
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
 
-# game.start()
-=======
 game.start()
->>>>>>> d73b1d97e8e0ec885336374de58349e9c73fc4a7

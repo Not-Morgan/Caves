@@ -2,7 +2,7 @@ import pygame
 import world
 import mobs
 
-display_height = 1000
+display_height = 700
 display_width = 1000
 fps = 45
 
