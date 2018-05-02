@@ -24,13 +24,13 @@ def draw_menu():
     text = font.render('Welcome to Caves !', False, (0, 0, 0))
     gameDisplay.blit(text, (10, 10))
 
-    display_buttons(gameDisplay, [100, 100, 75, 50], 'Start', green, dim_green)
+    if (display_buttons(gameDisplay, [460, 180, 80, 40], 'Start', green, dim_green)) == 'Start':
+        started = False
 
     # mouse = pygame.mouse.get_pos()
-    # text = pygame.font.SysFont(None, 17).render("Click to Start", True, black)
-    title = pygame.font.SysFont(None, 50)\
-        .render("Snake Thing Game", False, black)
-    center_text(gameDisplay, "Snake Thing Game", 500, 100, 50)
+    center_text(gameDisplay, "Click here to Start", 500, 150, 25)
+
+    center_text(gameDisplay, "Caves!", 500, 100, 50)
 
 
 while not started:
@@ -38,11 +38,10 @@ while not started:
         if event.type == pygame.QUIT:
             pygame.quit()
             quit()
-        if event.type == pygame.KEYDOWN:
-            started = True
     draw_menu()
     pygame.display.update()
     game.game_mgr.clock.tick(60)
+    print(started)
 
 
 game.start()
