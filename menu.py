@@ -18,7 +18,7 @@ blue = (0, 191, 255)
 black = (0, 0, 0)
 white = (255, 255, 255)
 
-# Define stuff
+# define display and caption
 gameDisplay = game.game_mgr.gameDisplay
 pygame.display.set_caption('Welcome')
 started = False
@@ -28,13 +28,16 @@ intro_sound = pygame.mixer.Sound("sounds/intro.ogg")
 gameplay_sound = pygame.mixer.Sound("sounds/gameplay.ogg")
 button_click = pygame.mixer.Sound("sounds/button.ogg")
 img = pygame.image.load('caves.jpg')
-gameDisplay.blit(img, (0,0))
 intro_sound.set_volume(1.0)                                    
 intro_sound.play (-1,0,0)
 
 
 def draw_menu():
-    gameDisplay.fill(game.white)
+
+    #if started already, don't draw any of the buttons
+    if started:
+        return True
+
     gameDisplay.blit(img, (0,0))
     font = pygame.font.SysFont(None, 17)
     text = font.render('Welcome to Caves !', False, white)
@@ -49,25 +52,31 @@ def draw_menu():
     if (display_buttons(gameDisplay, [450, 400, 100, 40], 'Visit our Website', red, dim_red)):
         webbrowser.open("https://github.com/Not-Morgan/Caves")
 
+    
+
     return display_buttons(gameDisplay, [460, 180, 80, 40], 'Start', green, dim_green)
 
 
 
 def start():
     intro_sound.fadeout(5000)
-    while pygame.mixer.get_busy() == True:
-        time.sleep(0.1)
+    if pygame.mixer.get_busy() == True:
+        gameDisplay.blit(img, (0,0))
+        # display instructions here
+        # gameDisplay.fill(white) - testing the fill screen, originally stuck in loop, can't update screen
 
 
-    gameplay_sound.set_volume(1.0)                                    
-    gameplay_sound.play (-1,0,0)
-    print("Game starts")
-    game.start()
-    pygame.quit()
-    quit()
+    else:
+        gameplay_sound.set_volume(1.0)                                    
+        gameplay_sound.play (-1,0,0)
+        pygame.display.set_caption('CAVES!')
+        # print("Game starts") - debug can't start game for some reason
+        game.start()
+        pygame.quit()
+        quit()
 
 
-while not started:
+while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -80,8 +89,10 @@ while not started:
     """
 
     if draw_menu():
+        started = True
         start()
 
+
+    # print(started, pygame.time.get_ticks()) - debug timeloop in function problem
     pygame.display.update()
     game.game_mgr.clock.tick(60)
-    # print(started)
