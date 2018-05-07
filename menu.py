@@ -27,6 +27,7 @@ started = False
 intro_sound = pygame.mixer.Sound("sounds/intro.ogg")
 gameplay_sound = pygame.mixer.Sound("sounds/gameplay.ogg")
 button_click = pygame.mixer.Sound("sounds/button.ogg")
+
 img = pygame.image.load('caves.jpg')
 intro_sound.set_volume(1.0)                                    
 intro_sound.play (-1,0,0)
@@ -36,16 +37,18 @@ web_button_pos = [450, 400, 100, 40]
 
 
 def draw_menu():
-    
+    '''
+    if k == 1:
+        button_click.play(1,0,0)
+    '''
+
 
     # if started already, don't draw any of the buttons
     if started:
         return True
 
     gameDisplay.blit(img, (0,0))
-    font = pygame.font.SysFont(None, 17)
-    text = font.render('Welcome to Caves !', False, white)
-    gameDisplay.blit(text, (10, 10))
+    center_text(gameDisplay, 'Welcome to Caves !', 70, 10, 17, white)
 
     
 
@@ -58,6 +61,7 @@ def draw_menu():
     center_text(gameDisplay, "Caves!", 500, 100, 50, white)
 
     if display_buttons(gameDisplay, web_button_pos, 'Visit us on Github', red, dim_red):
+        button_click.play(1,0,0)
         webbrowser.open("https://github.com/Not-Morgan/Caves")
 
     
@@ -65,30 +69,16 @@ def draw_menu():
     return display_buttons(gameDisplay, start_button_pos, 'Start', green, dim_green)
 
 
-
-
-def animate_button(pos, speed, text, colour, count):
-    # print(count) - testing the animate before implementation
-    pos[0] = pos[0] + (count * speed)
-    display_buttons(gameDisplay, pos, text, colour, colour)
-
-
-def animate_text(pos, font_size, speed, text, colour, count):
-    pos[1] = pos[1] + (count * speed)
-    center_text(gameDisplay, text, pos[0], pos[1], font_size, colour)
-
-
-
-
 def start(i):
-    intro_sound.fadeout(6000)
+    intro_sound.fadeout(7000)
     if pygame.mixer.get_busy() == True:
         gameDisplay.blit(img, (0,0))
 
         # all of the animation once the button is pressed
-        animate_button(start_button_pos , 1, 'Start', green, i)
-        animate_button(web_button_pos, -1, 'Visit us on Github', red, i)
-        animate_text([500, 100], 50, 1.5, "Caves!", white, i)
+        animate_button(gameDisplay, start_button_pos , 1, 'Start', green, i)
+        animate_button(gameDisplay, web_button_pos, -1, 'Visit us on Github', red, i)
+        animate_text(gameDisplay, [500, 100], 50, 3, "Caves!", white, i, 250)
+        animate_text(gameDisplay, [70, 10], 17, -0.5, 'Welcome to Caves !', white, i, 250)
         # display instructions here
         # gameDisplay.fill(white) - testing the fill screen, originally stuck in loop, can't update screen
 

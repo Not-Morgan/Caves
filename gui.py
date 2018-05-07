@@ -1,10 +1,11 @@
 # all the definitions for stuff
+
 import pygame
 
 # define colours of the buttons
 black = (0, 0, 0)
 
-
+button_click = pygame.mixer.Sound("sounds/button.ogg")
 
 pygame.font.init()
 
@@ -38,6 +39,24 @@ def display_buttons(screen, button_pos, text, colour, dim_colour):  # button_pos
         center_text(screen, text, button_pos[0] + button_pos[2]/2, button_pos[1] + 17, 17, black)
         # print(mouse, "not in button")
         return False
+
+# animation goes here after debugging to clean up the files
+
+def animate_button(display, pos, speed, text, colour, count):
+    # print(count) - testing the animate before implementation
+    pos[0] = pos[0] + (count * speed)
+    display_buttons(display, pos, text, colour, colour)
+
+
+def animate_text(display, pos, font_size, speed, text, colour, count, end_limit):
+    if pos[1] + (count * speed) < end_limit:
+        pos[1] = pos[1] + (count * speed)
+    else:
+        while not(pos[1] + (count * speed) < end_limit):
+            count -= 1
+
+        pos[1] = pos[1] + (count * speed)
+    center_text(display, text, pos[0], pos[1], font_size, colour)
 
 """
 def button_pressed(score, price1, price2, price3, price4):
