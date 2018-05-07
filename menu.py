@@ -31,10 +31,14 @@ img = pygame.image.load('caves.jpg')
 intro_sound.set_volume(1.0)                                    
 intro_sound.play (-1,0,0)
 
+start_button_pos = [460, 180, 80, 40]
+web_button_pos = [450, 400, 100, 40]
+
 
 def draw_menu():
+    
 
-    #if started already, don't draw any of the buttons
+    # if started already, don't draw any of the buttons
     if started:
         return True
 
@@ -45,23 +49,46 @@ def draw_menu():
 
     
 
-    # mouse = pygame.mouse.get_pos()
-    center_text(gameDisplay, "Click here to Start", 500, 150, 25, white)
+    # mouse = pygame.mouse.get_pos() - dont need this anymore
+    # print(int((str(pygame.time.get_ticks())[:-2])[-1:])) testing time thing
+    # flashing click to start
+    if int((str(pygame.time.get_ticks())[:-2])[-1:]) > 5:
+        center_text(gameDisplay, "Click the button below to Start", 500, 150, 25, white)
+
     center_text(gameDisplay, "Caves!", 500, 100, 50, white)
 
-    if (display_buttons(gameDisplay, [450, 400, 100, 40], 'Visit our Website', red, dim_red)):
+    if display_buttons(gameDisplay, web_button_pos, 'Visit us on Github', red, dim_red):
         webbrowser.open("https://github.com/Not-Morgan/Caves")
 
     
 
-    return display_buttons(gameDisplay, [460, 180, 80, 40], 'Start', green, dim_green)
+    return display_buttons(gameDisplay, start_button_pos, 'Start', green, dim_green)
 
 
 
-def start():
-    intro_sound.fadeout(5000)
+
+def animate_button(pos, speed, text, colour, count):
+    # print(count) - testing the animate before implementation
+    pos[0] = pos[0] + (count * speed)
+    display_buttons(gameDisplay, pos, text, colour, colour)
+
+
+def animate_text(pos, font_size, speed, text, colour, count):
+    pos[1] = pos[1] + (count * speed)
+    center_text(gameDisplay, text, pos[0], pos[1], font_size, colour)
+
+
+
+
+def start(i):
+    intro_sound.fadeout(6000)
     if pygame.mixer.get_busy() == True:
         gameDisplay.blit(img, (0,0))
+
+        # all of the animation once the button is pressed
+        animate_button(start_button_pos , 1, 'Start', green, i)
+        animate_button(web_button_pos, -1, 'Visit us on Github', red, i)
+        animate_text([500, 100], 50, 1.5, "Caves!", white, i)
         # display instructions here
         # gameDisplay.fill(white) - testing the fill screen, originally stuck in loop, can't update screen
 
@@ -76,6 +103,7 @@ def start():
         quit()
 
 
+k = 0
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -90,7 +118,8 @@ while True:
 
     if draw_menu():
         started = True
-        start()
+        k += 1
+        start(k)
 
 
     # print(started, pygame.time.get_ticks()) - debug timeloop in function problem
