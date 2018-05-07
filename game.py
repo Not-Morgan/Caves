@@ -83,6 +83,9 @@ class GameManager:
         if self.player_mov == -1:
             player.move(-0.5)
         player.rotate(self.player_rot)
+        
+        if player.health < 1:
+            print("you died")
 
         mob_mgr.move_all()
 
