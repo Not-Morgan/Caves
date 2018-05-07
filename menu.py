@@ -21,6 +21,7 @@ white = (255, 255, 255)
 # define display and caption
 gameDisplay = game.game_mgr.gameDisplay
 pygame.display.set_caption('Welcome')
+info = False
 started = False
 
 # set sound
@@ -29,11 +30,14 @@ gameplay_sound = pygame.mixer.Sound("sounds/gameplay.ogg")
 button_click = pygame.mixer.Sound("sounds/button.ogg")
 
 img = pygame.image.load('caves.jpg')
+help_info = pygame.image.load('help.jpg')
 intro_sound.set_volume(1.0)                                    
 intro_sound.play (-1,0,0)
 
 start_button_pos = [460, 180, 80, 40]
-web_button_pos = [450, 400, 100, 40]
+web_button_pos = [430, 400, 140, 40]
+help_button_pos = [455, 300, 90, 40]
+back_button_pos = [20, 20, 80, 40]
 
 
 def draw_menu():
@@ -41,7 +45,7 @@ def draw_menu():
     if k == 1:
         button_click.play(1,0,0)
     '''
-
+    global info
 
     # if started already, don't draw any of the buttons
     if started:
@@ -64,6 +68,18 @@ def draw_menu():
         button_click.play(1,0,0)
         webbrowser.open("https://github.com/Not-Morgan/Caves")
 
+    if display_buttons(gameDisplay, help_button_pos, 'Need help?', blue, dim_blue) or info:
+        # button_click.play(1,0,0)
+        gameDisplay.fill(white)
+        gameDisplay.blit(help_info, (-17,30))
+
+        info = True
+
+        if display_buttons(gameDisplay, back_button_pos, '<- Go Back', blue, dim_blue):
+            info = False
+
+        return False
+
     
 
     return display_buttons(gameDisplay, start_button_pos, 'Start', green, dim_green)
@@ -84,10 +100,12 @@ def start(i):
 
 
     else:
+        gameDisplay.fill(black)
         gameplay_sound.set_volume(1.0)                                    
         gameplay_sound.play (-1,0,0)
         pygame.display.set_caption('CAVES!')
         # print("Game starts") - debug can't start game for some reason
+
         game.start()
         pygame.quit()
         quit()
@@ -110,6 +128,8 @@ while True:
         started = True
         k += 1
         start(k)
+
+    # print(info) --testing the info button
 
 
     # print(started, pygame.time.get_ticks()) - debug timeloop in function problem
