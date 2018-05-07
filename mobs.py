@@ -34,18 +34,21 @@ class Mob:
 
 class Enemy(Mob):
     def exist(self):
-        if True:
-            if self.move():
-                self.rotate(180)
-            self.rotate(randint(-10, 10))
+        if math.hypo(self.pos, game.player.pos) < 50:
+            self.direction = math.angle_between(self.pos, game.player.pos)
+            if math.hypo(self.pos, game.player.pos) < 10:
+                game.player.health -= 1
         else:
-            self.direction = math.angle_between(self.pos, game.game_mgr.player)
+            self.rotate(randint(-10, 10))
+        if self.move():
+            self.rotate(180)
         return True
 
 
 class Player(Mob):
     bombs = 10
     speed = 1.5
+    health = 100
 
     def __init__(self, pos):
         super().__init__(pos)
@@ -100,7 +103,7 @@ class Bullet(Mob):
             super().move(self.speed)
             for i in game.mob_mgr.enemies:
                 if math.hypo(self.pos, i.pos) < 10:
-                    game.mob_mgr.remove(i)
+                    game.mob_mgr.enemies.remove(i)
             return True
 
 
