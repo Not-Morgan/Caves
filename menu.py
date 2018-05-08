@@ -34,8 +34,11 @@ button_click = pygame.mixer.Sound("static/sounds/button.ogg")
 
 
 img = pygame.image.load('static/pictures/caves.jpg')
-help_info = pygame.image.load('static/pictures/help.jpg')
+help_info = pygame.image.load('static/pictures/help.png')
 credits_info = pygame.image.load('static/pictures/credits.png')
+logo = pygame.image.load('static/pictures/logo.png')
+pygame.display.set_icon(logo)
+
 intro_sound.set_volume(1.0)                                    
 intro_sound.play(-1, fade_ms=3000)
 
