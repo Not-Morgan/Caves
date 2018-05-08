@@ -5,7 +5,7 @@ import pygame
 # define colours of the buttons
 black = (0, 0, 0)
 
-button_click = pygame.mixer.Sound("sounds/button.ogg")
+button_click = pygame.mixer.Sound("static/sounds/button.ogg")
 
 pygame.font.init()
 
@@ -82,6 +82,6 @@ _$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 ___$$$$$$$$$$$$$$$$$$$$$$$$
 _____$$$$$$$$$$$$$$$$$$$$__
 
-Coffee?
+Coffee or tea?
 
 """

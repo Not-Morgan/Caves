@@ -11,13 +11,14 @@ pygame.init()
 dim_red = (200, 0, 0)
 dim_green = (0, 200, 0)
 dim_blue = (136, 206, 250)
-dim_white = (200, 200, 200)
+dim_grey = (180, 180, 180)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 191, 255)
 black = (0, 0, 0)
 yellow = (255, 255, 0)
 white = (255, 255, 255)
+grey = (200, 200, 200)
 
 # define display and caption
 gameDisplay = game.game_mgr.gameDisplay
@@ -27,14 +28,14 @@ credits = False
 started = False
 
 # set sound
-intro_sound = pygame.mixer.Sound("sounds/intro.ogg")
-gameplay_sound = pygame.mixer.Sound("sounds/gameplay.ogg")
-button_click = pygame.mixer.Sound("sounds/button.ogg")
+intro_sound = pygame.mixer.Sound("static/sounds/intro.ogg")
+gameplay_sound = pygame.mixer.Sound("static/sounds/gameplay.ogg")
+button_click = pygame.mixer.Sound("static/sounds/button.ogg")
 
 
-img = pygame.image.load('caves.jpg')
-help_info = pygame.image.load('help.jpg')
-credits_info = pygame.image.load('credits.png')
+img = pygame.image.load('static/pictures/caves.jpg')
+help_info = pygame.image.load('static/pictures/help.jpg')
+credits_info = pygame.image.load('static/pictures/credits.png')
 intro_sound.set_volume(1.0)                                    
 intro_sound.play(-1, fade_ms=3000)
 
@@ -75,7 +76,7 @@ def draw_menu():
         button_click.play(1, 0, 0)
         webbrowser.open("https://github.com/Not-Morgan/Caves")
 
-    if display_buttons(gameDisplay, credits_button_pos, 'Credits', white, dim_white) or credits:
+    if display_buttons(gameDisplay, credits_button_pos, 'Credits', grey, dim_grey) or credits:
         if not credits:
             button_click.play(1, 0, 0)
             pygame.display.set_caption('Credits')
@@ -88,7 +89,7 @@ def draw_menu():
 
         credits = True
 
-        if display_buttons(gameDisplay, back_button_pos, '<- Go Back', white, dim_white):
+        if display_buttons(gameDisplay, back_button_pos, '<- Go Back', grey, dim_grey):
             button_click.play(1, 0, 0)
             pygame.display.set_caption('Welcome')
             credits = False
@@ -130,7 +131,7 @@ def start(i):
         animate_button(gameDisplay, start_button_pos, 1, 'Start', green, i)
         animate_button(gameDisplay, help_button_pos, -1, 'Need help?', dim_blue, i)
         animate_button(gameDisplay, web_button_pos, 1, 'Visit us on Github', dim_red, i)
-        animate_button(gameDisplay, credits_button_pos, -1, 'Credits', dim_white, i)
+        animate_button(gameDisplay, credits_button_pos, -1, 'Credits', dim_grey, i)
         animate_text(gameDisplay, [500, 100], 60, 3, "Caves!", white, i, 250)
         animate_text(gameDisplay, [70, 10], 17, -0.5, 'Welcome to Caves!', white, i, 250)
         # display instructions here
@@ -178,7 +179,7 @@ while True:
     /  /  _/ /    +                                      /              \/
    '  (__/                                             /                  \
    
-   Mason you better get the game to work otherwise this dragon will breath on you and you will become ash.
+   Mason you better get the game to work otherwise this dragon will breathe on you and you will become ash.
 
     """
 
