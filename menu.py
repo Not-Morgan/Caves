@@ -16,6 +16,7 @@ red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 191, 255)
 black = (0, 0, 0)
+yellow = (255, 255, 0)
 white = (255, 255, 255)
 
 # define display and caption
@@ -33,6 +34,7 @@ button_click = pygame.mixer.Sound("sounds/button.ogg")
 
 img = pygame.image.load('caves.jpg')
 help_info = pygame.image.load('help.jpg')
+credits_info = pygame.image.load('credits.png')
 intro_sound.set_volume(1.0)                                    
 intro_sound.play(-1, fade_ms=3000)
 
@@ -80,20 +82,18 @@ def draw_menu():
         # button_click.play(1,0,0)
 
         gameDisplay.fill(white)
-        gameDisplay.blit(help_info, (-17, 30))
+        gameDisplay.blit(credits_info, (-17, 0))
+        # center_text(gameDisplay, "CREDITS", 500, 20, 50, black)
+
 
         credits = True
 
-        if display_buttons(gameDisplay, back_button_pos, '<- Go Back', blue, dim_blue):
+        if display_buttons(gameDisplay, back_button_pos, '<- Go Back', white, dim_white):
             button_click.play(1, 0, 0)
             pygame.display.set_caption('Welcome')
             credits = False
 
         return False
-
-    if display_buttons(gameDisplay, web_button_pos, 'Visit us on Github', red, dim_red):
-        button_click.play(1, 0, 0)
-        webbrowser.open("https://github.com/Not-Morgan/Caves")
 
     if display_buttons(gameDisplay, help_button_pos, 'Need help?', blue, dim_blue) or info:
         if not info:
@@ -112,6 +112,10 @@ def draw_menu():
             info = False
 
         return False
+
+    if display_buttons(gameDisplay, web_button_pos, 'Visit us on Github', red, dim_red):
+        button_click.play(1, 0, 0)
+        webbrowser.open("https://github.com/Not-Morgan/Caves")
 
     return display_buttons(gameDisplay, start_button_pos, 'Start', green, dim_green)
 
