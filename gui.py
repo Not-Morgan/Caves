@@ -28,7 +28,8 @@ def display_buttons(screen, button_pos, text, colour, dim_colour):  # button_pos
 
     mouse = pygame.mouse.get_pos()
 
-    if button_pos[0] + button_pos[2] > mouse[0] > button_pos[0] and button_pos[1] + button_pos[3] > mouse[1] > button_pos[1]:  # if mouse is inside the button
+    if button_pos[0] + button_pos[2] > mouse[0] > button_pos[0] and \
+            button_pos[1] + button_pos[3] > mouse[1] > button_pos[1]:  # if mouse is inside the button
         pygame.draw.rect(screen, colour, (button_pos[0], button_pos[1], button_pos[2], button_pos[3]))  # change colour
         center_text(screen, text, button_pos[0] + button_pos[2]/2, button_pos[1] + 17, 17, black)
         # print(mouse, "in button")
@@ -39,8 +40,8 @@ def display_buttons(screen, button_pos, text, colour, dim_colour):  # button_pos
         center_text(screen, text, button_pos[0] + button_pos[2]/2, button_pos[1] + 17, 17, black)
         # print(mouse, "not in button")
         return False
-
 # animation goes here after debugging to clean up the files
+
 
 def animate_button(display, pos, speed, text, colour, count):
     # print(count) - testing the animate before implementation
@@ -58,38 +59,27 @@ def animate_text(display, pos, font_size, speed, text, colour, count, end_limit)
         pos[1] = pos[1] + (count * speed)
     center_text(display, text, pos[0], pos[1], font_size, colour)
 
+
 """
-def button_pressed(score, price1, price2, price3, price4):
-        
-        button1_pos = [515, 100, 75, 50]
-        
+___________((_____))
+____________))___((
+___________((_____))
+____________))___((
+___________((_____))____________$$$$$$
+____________))___((____________$$____$$
+_$$$$$$$$$$$$$$$$$$$$$$$$$$$$$______$$
+__$$$$$$$$$$$$$$$$$$$$$$$$$$$_______$$
+___$$$$$$$$$$$$$$$$$$$$$$$$________$$
+____$$$$$$$$$$$$$$$$$$$$$$________$$
+____$$$$$$$$$$$$$$$$$$$$$$______$$
+_____$$$$$$$$$$$$$$$$$$$$_____$$
+_____$$$$$$$$$$$$$$$$$$$$$$$$$
+______$$$$$$$$$$$$$$$$$$
+_______$$$$$$$$$$$$$$$$
+_________$$$$$$$$$$$$
+___________$$$$$$$$
+_$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+___$$$$$$$$$$$$$$$$$$$$$$$$
+_____$$$$$$$$$$$$$$$$$$$$__
 
-        mouse = pygame.mouse.get_pos()
-
-        #define the function of if a mouse is clicked in the boundary of the buttons
-        
-        def buttonClicked(button_pos):
-            if button_pos[0] + button_pos[2] > mouse[0] > button_pos[0] and button_pos[1] + button_pos[3] > mouse[1] > button_pos[1]: #if the mouse is in the boundaries of the button
-                for event in pygame.event.get():
-                    if event.type == pygame.MOUSEBUTTONDOWN: #and the mouse is clicked
-                        return True
-                
-
-        #checks if the buttons are clicked and returns them to the main script
-
-        if buttonClicked(button1_pos) and score >= price1:
-                return "Apple"
-        if buttonClicked(button2_pos) and score >= price2:
-                return "Snake"
-        if buttonClicked(button3_pos) and score >= price3:
-                return "Snake2"
-        if buttonClicked(button4_pos) and score >= price4:
-                return "Snake3"
-        if buttonClicked(buttoncheat_pos):
-                return "Snake4"
-        if buttonClicked(buttoncredits_pos):
-                webbrowser.open("https://github.com/Not-Morgan/Caves")
-        
-        else:
-                return "None"
-    """
+"""

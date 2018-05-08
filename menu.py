@@ -1,7 +1,6 @@
 import pygame
 import game
 import webbrowser
-import time
 from gui import *
 
 pygame.font.init()
@@ -29,10 +28,12 @@ intro_sound = pygame.mixer.Sound("sounds/intro.ogg")
 gameplay_sound = pygame.mixer.Sound("sounds/gameplay.ogg")
 button_click = pygame.mixer.Sound("sounds/button.ogg")
 
+
 img = pygame.image.load('caves.jpg')
 help_info = pygame.image.load('help.jpg')
 intro_sound.set_volume(1.0)                                    
-intro_sound.play (-1,0,0)
+intro_sound.play(-1, fade_ms=3000)
+
 
 start_button_pos = [460, 180, 80, 40]
 web_button_pos = [430, 400, 140, 40]
@@ -41,20 +42,20 @@ back_button_pos = [20, 20, 80, 40]
 
 
 def draw_menu():
-    '''
+    """
     if k == 1:
         button_click.play(1,0,0)
-    '''
+    """
+
+    # draws main menu
     global info
 
     # if started already, don't draw any of the buttons
     if started:
         return True
 
-    gameDisplay.blit(img, (0,0))
-    center_text(gameDisplay, 'Welcome to Caves !', 70, 10, 17, white)
-
-    
+    gameDisplay.blit(img, (0, 0))
+    center_text(gameDisplay, 'Welcome to Caves!', 70, 10, 17, white)
 
     # mouse = pygame.mouse.get_pos() - dont need this anymore
     # print(int((str(pygame.time.get_ticks())[:-2])[-1:])) testing time thing
@@ -65,44 +66,49 @@ def draw_menu():
     center_text(gameDisplay, "Caves!", 500, 100, 50, white)
 
     if display_buttons(gameDisplay, web_button_pos, 'Visit us on Github', red, dim_red):
-        button_click.play(1,0,0)
+        button_click.play(1, 0, 0)
         webbrowser.open("https://github.com/Not-Morgan/Caves")
 
     if display_buttons(gameDisplay, help_button_pos, 'Need help?', blue, dim_blue) or info:
+        if not info:
+            button_click.play(1, 0, 0)
+            pygame.display.set_caption('Help')
         # button_click.play(1,0,0)
+        
         gameDisplay.fill(white)
-        gameDisplay.blit(help_info, (-17,30))
+        gameDisplay.blit(help_info, (-17, 30))
 
         info = True
 
         if display_buttons(gameDisplay, back_button_pos, '<- Go Back', blue, dim_blue):
+            button_click.play(1, 0, 0)
+            pygame.display.set_caption('Welcome')
             info = False
 
         return False
-
-    
 
     return display_buttons(gameDisplay, start_button_pos, 'Start', green, dim_green)
 
 
 def start(i):
+    pygame.display.set_caption('Loading Caves! ...')
     intro_sound.fadeout(7000)
-    if pygame.mixer.get_busy() == True:
-        gameDisplay.blit(img, (0,0))
+    if pygame.mixer.get_busy():  # and a certain amount of time has passed
+        gameDisplay.blit(img, (0, 0))
 
         # all of the animation once the button is pressed
-        animate_button(gameDisplay, start_button_pos , 1, 'Start', green, i)
-        animate_button(gameDisplay, web_button_pos, -1, 'Visit us on Github', red, i)
+        animate_button(gameDisplay, start_button_pos, 1, 'Start', green, i)
+        animate_button(gameDisplay, web_button_pos, 1, 'Visit us on Github', dim_red, i)
+        animate_button(gameDisplay, help_button_pos, -1, 'Need help?', dim_blue, i)
         animate_text(gameDisplay, [500, 100], 50, 3, "Caves!", white, i, 250)
-        animate_text(gameDisplay, [70, 10], 17, -0.5, 'Welcome to Caves !', white, i, 250)
+        animate_text(gameDisplay, [70, 10], 17, -0.5, 'Welcome to Caves!', white, i, 250)
         # display instructions here
         # gameDisplay.fill(white) - testing the fill screen, originally stuck in loop, can't update screen
-
 
     else:
         gameDisplay.fill(black)
         gameplay_sound.set_volume(1.0)                                    
-        gameplay_sound.play (-1,0,0)
+        gameplay_sound.play(-1, fade_ms=500)
         pygame.display.set_caption('CAVES!')
         # print("Game starts") - debug can't start game for some reason
 
@@ -122,6 +128,27 @@ while True:
         if event.type == pygame.KEYDOWN: # Press Spacebar to Start
             if event.key == pygame.K_SPACE:
                 start()
+                
+    """
+    """
+
+
+   (  )   /\   _                 (     
+    \ |  (  \ ( \.(               )                      _____
+  \  \ \  `  `   ) \             (  ___                 / _   \
+ (_`    \+   . x  ( .\            \/   \____-----------/ (o)   \_
+- .-               \+  ;          (  O                           \____
+                          )        \_____________  `              \  /
+(__                +- .( -'.- <. - _  VVVVVVV VV V\                 \/
+(_____            ._._: <_ - <- _  (--  _AAAAAAA__A_/                  |
+  .    /./.+-  . .- /  +--  - .     \______________//_              \_______
+  (__ ' /x  / x _/ (                                  \___'          \     /
+ , x / ( '  . / .  /                                      |           \   /
+    /  /  _/ /    +                                      /              \/
+   '  (__/                                             /                  \
+   
+   Mason you better get the game to work otherwise this dragon will breath on you and you will become ash.
+
     """
 
     if draw_menu():
@@ -130,8 +157,6 @@ while True:
         start(k)
 
     # print(info) --testing the info button
-
-
     # print(started, pygame.time.get_ticks()) - debug timeloop in function problem
     pygame.display.update()
-    game.game_mgr.clock.tick(60)
+    game.game_mgr.clock.tick(120)
