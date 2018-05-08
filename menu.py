@@ -11,6 +11,7 @@ pygame.init()
 dim_red = (200, 0, 0)
 dim_green = (0, 200, 0)
 dim_blue = (136, 206, 250)
+dim_white = (200, 200, 200)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 191, 255)
@@ -21,6 +22,7 @@ white = (255, 255, 255)
 gameDisplay = game.game_mgr.gameDisplay
 pygame.display.set_caption('Welcome')
 info = False
+credits = False
 started = False
 
 # set sound
@@ -38,6 +40,7 @@ intro_sound.play(-1, fade_ms=3000)
 start_button_pos = [460, 180, 80, 40]
 web_button_pos = [430, 400, 140, 40]
 help_button_pos = [455, 300, 90, 40]
+credits_button_pos = [450, 500, 100, 40]
 back_button_pos = [20, 20, 80, 40]
 
 
@@ -49,6 +52,7 @@ def draw_menu():
 
     # draws main menu
     global info
+    global credits
 
     # if started already, don't draw any of the buttons
     if started:
@@ -64,6 +68,28 @@ def draw_menu():
         center_text(gameDisplay, "Click the button below to Start", 500, 150, 25, white)
 
     center_text(gameDisplay, "Caves!", 500, 100, 50, white)
+
+    if display_buttons(gameDisplay, web_button_pos, 'Visit us on Github', red, dim_red):
+        button_click.play(1, 0, 0)
+        webbrowser.open("https://github.com/Not-Morgan/Caves")
+
+    if display_buttons(gameDisplay, credits_button_pos, 'Credits', white, dim_white) or credits:
+        if not credits:
+            button_click.play(1, 0, 0)
+            pygame.display.set_caption('Credits')
+        # button_click.play(1,0,0)
+
+        gameDisplay.fill(white)
+        gameDisplay.blit(help_info, (-17, 30))
+
+        credits = True
+
+        if display_buttons(gameDisplay, back_button_pos, '<- Go Back', blue, dim_blue):
+            button_click.play(1, 0, 0)
+            pygame.display.set_caption('Welcome')
+            credits = False
+
+        return False
 
     if display_buttons(gameDisplay, web_button_pos, 'Visit us on Github', red, dim_red):
         button_click.play(1, 0, 0)
@@ -92,15 +118,16 @@ def draw_menu():
 
 def start(i):
     pygame.display.set_caption('Loading Caves! ...')
-    intro_sound.fadeout(7000)
+    intro_sound.fadeout(5000)
     if pygame.mixer.get_busy():  # and a certain amount of time has passed
         gameDisplay.blit(img, (0, 0))
 
         # all of the animation once the button is pressed
         animate_button(gameDisplay, start_button_pos, 1, 'Start', green, i)
-        animate_button(gameDisplay, web_button_pos, 1, 'Visit us on Github', dim_red, i)
         animate_button(gameDisplay, help_button_pos, -1, 'Need help?', dim_blue, i)
-        animate_text(gameDisplay, [500, 100], 50, 3, "Caves!", white, i, 250)
+        animate_button(gameDisplay, web_button_pos, 1, 'Visit us on Github', dim_red, i)
+        animate_button(gameDisplay, credits_button_pos, -1, 'Credits', dim_white, i)
+        animate_text(gameDisplay, [500, 100], 60, 3, "Caves!", white, i, 250)
         animate_text(gameDisplay, [70, 10], 17, -0.5, 'Welcome to Caves!', white, i, 250)
         # display instructions here
         # gameDisplay.fill(white) - testing the fill screen, originally stuck in loop, can't update screen

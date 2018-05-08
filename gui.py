@@ -16,7 +16,7 @@ def center_text(screen, text, x, y, font_size, colour):
     screen.blit(text, (x - text.get_rect().width / 2, y))
 
 
-def buttonClicked():
+def button_clicked():
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
             return True
@@ -33,7 +33,7 @@ def display_buttons(screen, button_pos, text, colour, dim_colour):  # button_pos
         pygame.draw.rect(screen, colour, (button_pos[0], button_pos[1], button_pos[2], button_pos[3]))  # change colour
         center_text(screen, text, button_pos[0] + button_pos[2]/2, button_pos[1] + 17, 17, black)
         # print(mouse, "in button")
-        if buttonClicked():
+        if button_clicked():
             return True
     else:
         pygame.draw.rect(screen, dim_colour, (button_pos[0], button_pos[1], button_pos[2], button_pos[3]))
@@ -81,5 +81,7 @@ ___________$$$$$$$$
 _$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 ___$$$$$$$$$$$$$$$$$$$$$$$$
 _____$$$$$$$$$$$$$$$$$$$$__
+
+Coffee?
 
 """
