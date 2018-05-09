@@ -5,6 +5,7 @@ from random import randint
 
 
 class Mob:
+    health = 5
     direction = 0
     speed = 1
     size = 7
@@ -31,17 +32,24 @@ class Mob:
     def rotate(self, degrees):
         self.direction = (self.direction + degrees) % 360
 
+    def change_health(self, amount):
+        self.health += amount
+
 
 class Enemy(Mob):
+    health = 3
+
     def exist(self):
         if math.hypo(self.pos, game.player.pos) < 50:
             self.direction = math.angle_between(self.pos, game.player.pos)
             if math.hypo(self.pos, game.player.pos) < 10:
-                game.player.health -= 1
+                game.player.change_health(-1)
         else:
             self.rotate(randint(-10, 10))
         if self.move():
             self.rotate(180)
+        if not self.health:
+            return False
         return True
 
 
@@ -81,6 +89,12 @@ class Player(Mob):
     def throw_bomb(self):
         game.mob_mgr.new_mob(Bomb, [self.pos[0], self.pos[1]], self.direction)
         self.bombs -= 1
+
+    def change_health(self, amount):
+        super().change_health(amount)
+
+        if not self.health:
+            game.game_mgr.player_death()
 
 
 class Bomb(Mob):
@@ -124,7 +138,7 @@ class Bullet(Mob):
             super().move(self.speed)
             for i in game.mob_mgr.enemies:
                 if math.hypo(self.pos, i.pos) < 10:
-                    game.mob_mgr.enemies.remove(i)
+                    i.change_health(-1)
             return True
 
 

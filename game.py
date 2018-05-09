@@ -86,7 +86,7 @@ class GameManager:
             player.move()
         if self.player_mov == -1:
             player.move(-0.5)
-        player.rotate(self.player_rot)
+        player.rotate(self.player_rot * 2)
         
         if player.health < 1:
             print("you died")
@@ -101,6 +101,9 @@ class GameManager:
             self.draw()
             self.take_input()
             self.logic()
+
+    def player_death(self):
+        pass
 
 
 game_mgr = GameManager()
