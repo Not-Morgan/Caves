@@ -32,17 +32,19 @@ intro_sound = pygame.mixer.Sound("static/sounds/intro.ogg")
 gameplay_sound = pygame.mixer.Sound("static/sounds/gameplay.ogg")
 button_click = pygame.mixer.Sound("static/sounds/button.ogg")
 
-
+# load background image and other screen images
 img = pygame.image.load('static/pictures/caves.jpg')
 help_info = pygame.image.load('static/pictures/help.png')
 credits_info = pygame.image.load('static/pictures/credits.png')
 logo = pygame.image.load('static/pictures/logo.png')
+
 pygame.display.set_icon(logo)
 
+# start intro sound
 intro_sound.set_volume(1.0)                                    
 intro_sound.play(-1, fade_ms=3000)
 
-
+# define button positions
 start_button_pos = [460, 180, 80, 40]
 web_button_pos = [430, 400, 140, 40]
 help_button_pos = [455, 300, 90, 40]
@@ -51,10 +53,6 @@ back_button_pos = [20, 20, 80, 40]
 
 
 def draw_menu():
-    """
-    if k == 1:
-        button_click.play(1,0,0)
-    """
 
     # draws main menu
     global info
@@ -88,7 +86,6 @@ def draw_menu():
         gameDisplay.fill(white)
         gameDisplay.blit(credits_info, (-17, 0))
         # center_text(gameDisplay, "CREDITS", 500, 20, 50, black)
-
 
         credits = True
 
@@ -128,7 +125,7 @@ def start(i):
     pygame.display.set_caption('Loading Caves! ...')
     intro_sound.fadeout(5000)
     if pygame.mixer.get_busy():  # and a certain amount of time has passed
-        gameDisplay.blit(img, (0, 0))
+        gameDisplay.blit(img, (0, (i * -1)/2))
 
         # all of the animation once the button is pressed
         animate_button(gameDisplay, start_button_pos, 1, 'Start', green, i)
