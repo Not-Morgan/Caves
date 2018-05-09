@@ -16,6 +16,8 @@ blue = (0, 0, 255)
 class GameManager:
     player_rot = 0
     player_mov = 0
+    screen_x = 0
+    screen_y = 0
     crashed = False
     world_mgr = None
     player = None
@@ -32,8 +34,8 @@ class GameManager:
 
         world_mgr.render(self.gameDisplay)
 
-        # draw player
-        pygame.draw.circle(self.gameDisplay, blue, list(map(int, player.pos)), 7, 0)
+        # draw playere
+        pygame.draw.circle(self.gameDisplay, blue, [int(player.pos[0] + self.screen_x), int(player.pos[1] + self.screen_y)], 7, 0)
 
         mob_mgr.render(self.gameDisplay)
 
@@ -50,13 +52,15 @@ class GameManager:
                     print(self.player.pos, self.player.direction)
                 if event.key == pygame.K_c:
                     mob_mgr.new_mob(mobs.Enemy, [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]])
+                if event.key == pygame.K_m:
+                    print("{}, [{}, {}]".format(player.pos, self.screen_x, self.screen_y))
 
                 if event.key == pygame.K_SPACE:
                     player.shoot()
                 if event.key == pygame.K_e:
                     player.throw_bomb()
 
-                # player movement
+                # moving
                 if event.key == pygame.K_w:
                     self.player_mov += 1
                 if event.key == pygame.K_s:
@@ -88,6 +92,9 @@ class GameManager:
             print("you died")
 
         mob_mgr.move_all()
+
+        self.screen_x = 500 - player.pos[0]
+        self.screen_y = 500 - player.pos[1]
 
     def mainloop(self):
         while not self.crashed:

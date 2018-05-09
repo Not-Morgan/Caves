@@ -1,4 +1,5 @@
 from math import *
+import game
 
 
 def hypo(a, b):
@@ -15,3 +16,7 @@ def angle_between(a, b):
 
 def in_circles(point, circles):
     return any([hypo(point, c.pos) < c.radius for c in circles])
+
+
+def screen_pos(pos):
+    return [int(pos[0] + game.game_mgr.screen_x), int(pos[1] + game.game_mgr.screen_y)]

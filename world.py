@@ -10,7 +10,7 @@ class WorldManager:
 
     def render(self, gameDisplay):
         for cave in self.caves:
-            pygame.draw.circle(gameDisplay, (255, 255, 255), list(map(int, cave.pos)), cave.radius, 0)
+            pygame.draw.circle(gameDisplay, (255, 255, 255), math.screen_pos(cave.pos), cave.radius, 0)
 
     def add_hole(self, pos, radius):
         self.caves.append(Cave(pos, radius))

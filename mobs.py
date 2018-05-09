@@ -53,6 +53,27 @@ class Player(Mob):
     def __init__(self, pos):
         super().__init__(pos)
 
+    def move(self, dist=None):
+        if dist is None:
+            dist = self.speed
+
+        # move based on direction
+        self.pos[0] += math.cos(math.radians(self.direction)) * dist
+        self.pos[1] += math.sin(math.radians(self.direction)) * dist
+
+        # game.game_mgr.screen_x += math.cos(math.radians(self.direction)) * dist
+        # game.game_mgr.screen_y += math.sin(math.radians(self.direction)) * dist
+
+        # undo if you went into a wall
+        if not math.in_circles(self.pos, game.world_mgr.caves):
+            self.pos[0] -= math.cos(math.radians(self.direction)) * dist
+            self.pos[1] -= math.sin(math.radians(self.direction)) * dist
+
+            # game.game_mgr.screen_x -= math.cos(math.radians(self.direction)) * dist
+            # game.game_mgr.screen_y -= math.sin(math.radians(self.direction)) * dist
+            return True
+        return False
+
     def shoot(self):
         for i in range(5):
             game.mob_mgr.new_mob(Bullet, [self.pos[0], self.pos[1]], self.direction + randint(-10, 10))
@@ -131,7 +152,7 @@ class MobManager:
 
     def render(self, gameDisplay):
         for i in self.items:
-            pygame.draw.circle(gameDisplay, i.colour, list(map(int, i.pos)), i.size, 0)
+            pygame.draw.circle(gameDisplay, i.colour, math.screen_pos(i.pos), i.size, 0)
 
         for e in self.enemies:
-            pygame.draw.circle(gameDisplay, (255, 0, 0), list(map(int, e.pos)), e.size, 0)
+            pygame.draw.circle(gameDisplay, (255, 0, 0), math.screen_pos(e.pos), e.size, 0)
