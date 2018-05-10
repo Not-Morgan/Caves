@@ -96,7 +96,7 @@ def draw_menu():
 
 def start(i):
     pygame.display.set_caption('Loading Caves! ...')
-    intro_sound.fadeout(5000)
+    intro_sound.fadeout(1000)
     if pygame.mixer.get_busy():  # and a certain amount of time has passed
         gameDisplay.blit(img, (0, (i * -1)/2))
 
