@@ -38,8 +38,7 @@ class Mob:
 
 class Enemy(Mob):
     health = 3
-    # speed = 0.75
-    speed = 0
+    speed = 0.75
 
     def exist(self):
         # if the player is close more towards the player
