@@ -38,7 +38,8 @@ class Mob:
 
 class Enemy(Mob):
     health = 3
-    speed = 0.75
+    # speed = 0.75
+    speed = 0
 
     def exist(self):
         # if the player is close more towards the player
@@ -53,7 +54,7 @@ class Enemy(Mob):
             self.rotate(randint(-10, 10))
         if self.move():
             self.rotate(180)
-        if not self.health:
+        if self.health < 1:
             return False
         return True
 
