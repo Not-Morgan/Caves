@@ -191,4 +191,4 @@ while True:
     # print(info) --testing the info button
     # print(started, pygame.time.get_ticks()) - debug timeloop in function problem
     pygame.display.update()
-    game.game_mgr.clock.tick(120)
+    game.game_mgr.clock.tick(30)
