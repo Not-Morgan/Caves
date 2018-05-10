@@ -19,9 +19,6 @@ class GameManager:
     screen_x = 0
     screen_y = 0
     crashed = False
-    world_mgr = None
-    player = None
-    mob_mgr = None
 
     def __init__(self):
         pygame.init()
@@ -48,8 +45,8 @@ class GameManager:
                 self.crashed = True
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_p:
-                    print(self.player.pos, self.player.direction)
+                # if event.key == pygame.K_p:
+                #     print(self.player.pos, self.player.direction)
                 if event.key == pygame.K_c:
                     mob_mgr.new_mob(mobs.Enemy, [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]])
                 if event.key == pygame.K_m:
@@ -119,5 +116,6 @@ def start():
     world_mgr = world.WorldManager()
     player = mobs.Player([500, 500])
     mob_mgr = mobs.MobManager()
+    world_mgr.generate_world()
 
     game_mgr.mainloop()
