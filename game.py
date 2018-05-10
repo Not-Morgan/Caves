@@ -13,6 +13,10 @@ green = (0, 255, 0)
 blue = (0, 0, 255)
 
 
+pygame.init()
+gameover = pygame.mixer.Sound("static/sounds/deathmusic.ogg")
+
+
 class GameManager:
     player_rot = 0
     player_mov = 0
@@ -100,7 +104,11 @@ class GameManager:
             self.logic()
 
     def player_death(self):
-        pass
+        self.gameDisplay.fill(black)
+        gameover.set_volume(1.0)
+        gameover.play(-1, 0, 0)
+        # center_text(self.gameDisplay, "You have died! I am disappointed in you", 400, 300, 60, black)
+
 
 
 game_mgr = GameManager()
