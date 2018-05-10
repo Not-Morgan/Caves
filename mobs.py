@@ -52,7 +52,7 @@ class Enemy(Mob):
             return False
         return True
 
-
+# 2D - Applying Abstraction
 class Player(Mob):
     bombs = 10
     speed = 1.5

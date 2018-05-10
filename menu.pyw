@@ -21,6 +21,9 @@ help_button_pos = [455, 300, 90, 40]
 credits_button_pos = [450, 500, 100, 40]
 back_button_pos = [20, 20, 80, 40]
 
+# Response 2C - Applying Algorithms -> the function draw_menu() is used to repeatedly draw the menus from
+# the algorithms in the GUI file (display_button and center_text)
+
 
 def draw_menu():
 
