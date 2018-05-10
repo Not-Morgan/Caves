@@ -38,12 +38,17 @@ class Mob:
 
 class Enemy(Mob):
     health = 3
+    speed = 0.75
 
     def exist(self):
+        # if the player is close more towards the player
         if math.hypo(self.pos, game.player.pos) < 50:
             self.direction = math.angle_between(self.pos, game.player.pos)
-            if math.hypo(self.pos, game.player.pos) < 10:
+            # if the player is close deal damage and move back
+            if math.hypo(self.pos, game.player.pos) < 15:
                 game.player.change_health(-1)
+                if self.move(self.speed * -1):
+                    self.rotate(180)
         else:
             self.rotate(randint(-10, 10))
         if self.move():
@@ -135,9 +140,11 @@ class Bullet(Mob):
         self.create_time = pygame.time.get_ticks()
 
     def exist(self):
+        # if it has existed for some time it disappears
         if pygame.time.get_ticks() - self.create_time > self.wait_time:
             return False
         else:
+            # else it moves forward
             super().move(self.speed)
             for i in game.mob_mgr.enemies:
                 if math.hypo(self.pos, i.pos) < 10:
@@ -162,6 +169,7 @@ class MobManager:
                 self.enemies.remove(i)
 
     def new_mob(self, mob, *args):
+        # decide if it is an enemy or item and add it to a list
         if mob is Enemy:
             self.enemies.append(mob(*args))
         else:
