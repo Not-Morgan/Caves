@@ -12,7 +12,6 @@ red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
 
-
 pygame.init()
 gameover = pygame.mixer.Sound("static/sounds/deathmusic.ogg")
 
@@ -36,7 +35,8 @@ class GameManager:
         world_mgr.render(self.gameDisplay)
 
         # draw playere
-        pygame.draw.circle(self.gameDisplay, blue, [int(player.pos[0] + self.screen_x), int(player.pos[1] + self.screen_y)], 7, 0)
+        pygame.draw.circle(self.gameDisplay, blue,
+                           [int(player.pos[0] + self.screen_x), int(player.pos[1] + self.screen_y)], 7, 0)
 
         mob_mgr.render(self.gameDisplay)
 
@@ -50,10 +50,12 @@ class GameManager:
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
-                    mob_mgr.new_mob(world.Chest, [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]], {"bombs": 5})
+                    mob_mgr.new_mob(world.Chest, [pygame.mouse.get_pos()[0] - self.screen_x,
+                                                  pygame.mouse.get_pos()[1] - self.screen_y], {"bombs": 5})
                     print(player.bombs)
                 if event.key == pygame.K_c:
-                    mob_mgr.new_mob(mobs.Enemy, [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]])
+                    mob_mgr.new_mob(mobs.Enemy, [pygame.mouse.get_pos()[0] - self.screen_x,
+                                                 pygame.mouse.get_pos()[1] - self.screen_y])
                 if event.key == pygame.K_m:
                     print("{}, [{}, {}]".format(player.pos, self.screen_x, self.screen_y))
 
@@ -89,7 +91,7 @@ class GameManager:
         if self.player_mov == -1:
             player.move(-0.5)
         player.rotate(self.player_rot * 2)
-        
+
         if player.health < 1:
             print("you died")
 
@@ -109,7 +111,6 @@ class GameManager:
         gameover.set_volume(1.0)
         gameover.play(-1, 0, 0)
         # center_text(self.gameDisplay, "You have died! I am disappointed in you", 400, 300, 60, black)
-
 
 
 game_mgr = GameManager()
