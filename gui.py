@@ -5,9 +5,37 @@ import pygame
 # define colours of the buttons
 black = (0, 0, 0)
 
-button_click = pygame.mixer.Sound("static/sounds/button.ogg")
+# button_click = pygame.mixer.Sound("static/sounds/button.ogg")
 
 pygame.font.init()
+pygame.init()
+
+
+# define colours of the buttons
+dim_red = (200, 0, 0)
+dim_green = (0, 200, 0)
+dim_blue = (136, 206, 250)
+dim_grey = (180, 180, 180)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 191, 255)
+black = (0, 0, 0)
+yellow = (255, 255, 0)
+white = (255, 255, 255)
+grey = (200, 200, 200)
+
+# Define sound files at static/sounds
+intro_sound = pygame.mixer.Sound("static/sounds/intro.ogg")
+gameplay_sound = pygame.mixer.Sound("static/sounds/gameplay.ogg")
+button_click = pygame.mixer.Sound("static/sounds/button.ogg")
+
+# load background image and other screen images
+img = pygame.image.load('static/pictures/caves.jpg')
+help_info = pygame.image.load('static/pictures/help.png')
+credits_info = pygame.image.load('static/pictures/credits.png')
+logo = pygame.image.load('static/pictures/logo.png')
+
+pygame.display.set_icon(logo)
 
 
 def center_text(screen, text, x, y, font_size, colour):
