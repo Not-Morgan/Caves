@@ -96,6 +96,9 @@ class Player(Mob):
         if not self.health:
             game.game_mgr.player_death()
 
+    def add_bombs(self, amount):
+        self.bombs += amount
+
 
 class Bomb(Mob):
     wait_time = 1000
