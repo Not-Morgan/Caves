@@ -14,7 +14,8 @@ green = (0, 255, 0)
 blue = (0, 0, 255)
 
 pygame.init()
-gameover = pygame.mixer.Sound("static/sounds/deathmusic.ogg")
+game_over = pygame.mixer.Sound("static/sounds/deathmusic.ogg")
+game_over.set_volume(1.0)
 
 
 class GameManager:
@@ -35,7 +36,7 @@ class GameManager:
 
         world_mgr.render(self.gameDisplay)
 
-        # draw playere
+        # draw player
         pygame.draw.circle(self.gameDisplay, blue,
                            [int(player.pos[0] + self.screen_x), int(player.pos[1] + self.screen_y)], 7, 0)
 
@@ -110,9 +111,12 @@ class GameManager:
 
     def player_death(self):
         self.gameDisplay.fill(black)
-        gameover.set_volume(1.0)
-        gameover.play(-1, 0, 0)
-        gui.center_text(self.gameDisplay, "You have died! I am disappointed in you", 400, 300, 60, black)
+        game_over.play(-1, 0, 0)
+        gui.center_text(self.gameDisplay, "You have died! I am disappointed in you", 400, 300, 60, white)
+
+    def sidebar(self):
+        pygame.draw.rect(self.gameDisplay, white, (800, 0, 200, 200), width=5)
+        gui.center_text(self.gameDisplay, "Thou hath" + player.bombs + "bombs", 900, 10, 12, white)
 
 
 game_mgr = GameManager()
