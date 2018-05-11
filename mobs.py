@@ -149,6 +149,7 @@ class Bullet(Mob):
             for i in game.mob_mgr.enemies:
                 if math.hypo(self.pos, i.pos) < 10:
                     i.change_health(-1)
+                    return False
             return True
 
 
