@@ -1,6 +1,7 @@
 import pygame
 import world
 import mobs
+import gui
 
 display_height = 700
 display_width = 1000
@@ -94,6 +95,7 @@ class GameManager:
 
         if player.health < 1:
             print("you died")
+            # Shouldn't you call player death here instead of mobs.py
 
         mob_mgr.move_all()
 
@@ -110,7 +112,7 @@ class GameManager:
         self.gameDisplay.fill(black)
         gameover.set_volume(1.0)
         gameover.play(-1, 0, 0)
-        # center_text(self.gameDisplay, "You have died! I am disappointed in you", 400, 300, 60, black)
+        gui.center_text(self.gameDisplay, "You have died! I am disappointed in you", 400, 300, 60, black)
 
 
 game_mgr = GameManager()
