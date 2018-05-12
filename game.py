@@ -96,8 +96,8 @@ class GameManager:
         player.rotate(self.player_rot * 2)
 
         if player.health < 1:
-            print("you died")
-            # Shouldn't you call player death here instead of mobs.py
+            self.player_death()
+            self.crashed = True
 
         mob_mgr.move_all()
 

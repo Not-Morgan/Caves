@@ -96,12 +96,6 @@ class Player(Mob):
         game.mob_mgr.new_mob(Bomb, [self.pos[0], self.pos[1]], self.direction)
         self.bombs -= 1
 
-    def change_health(self, amount):
-        super().change_health(amount)
-
-        if not self.health:
-            game.game_mgr.player_death()
-
     def add_bombs(self, amount):
         self.bombs += amount
 
