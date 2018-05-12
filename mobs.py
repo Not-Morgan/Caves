@@ -100,8 +100,9 @@ class Player(Mob):
             game.mob_mgr.new_mob(Bullet, [self.pos[0], self.pos[1]], self.direction + randint(-10, 10))
 
     def throw_bomb(self):
-        game.mob_mgr.new_mob(Bomb, [self.pos[0], self.pos[1]], self.direction)
-        self.bombs -= 1
+        if self.bombs > 0:
+            game.mob_mgr.new_mob(Bomb, [self.pos[0], self.pos[1]], self.direction)
+            self.bombs -= 1
 
     def add_bombs(self, amount):
         self.bombs += amount
