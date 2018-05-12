@@ -15,7 +15,7 @@ def angle_between(a, b):
 
 
 def in_circles(point, circles):
-    return any([hypo(point, c.pos) < c.radius for c in circles])
+    return any([hypo(point, c[0]) < c[1] - 0.1 for c in circles])
 
 
 def screen_pos(pos):
