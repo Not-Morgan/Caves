@@ -34,7 +34,8 @@ class WorldManager:
 
         self.add_hole([start_pos[0], start_pos[1]], size)
         if not randint(0, 70):
-            game.mob_mgr.new_mob(Chest, start_pos, {"bombs": randint(1, 8), "points": randint(1, 8)})
+            game.mob_mgr.new_mob(Chest, start_pos,
+                                 {"bombs": randint(1, 8), "points": randint(1, 8), "health": randint(0, 100)})
             # print("[world gen] new chest")
 
         # print("{}\n{}\n{}\n{}\n---------".format(start_pos, new_pos, length, direction))
@@ -89,5 +90,6 @@ class Chest:
         if math.hypo(self.pos, game.player.pos) < 10:
             game.player.add_bombs(self.loot["bombs"])
             game.player.add_points(self.loot["points"])
+            game.player.change_health(self.loot["health"])
             return False
         return True
