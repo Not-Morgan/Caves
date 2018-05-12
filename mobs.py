@@ -70,6 +70,7 @@ class Player(Mob):
     bombs = 10
     speed = 1.5
     health = 100
+    timer = 0
 
     def __init__(self, pos):
         super().__init__(pos)
@@ -96,8 +97,10 @@ class Player(Mob):
         return False
 
     def shoot(self):
-        for i in range(5):
-            game.mob_mgr.new_mob(Bullet, [self.pos[0], self.pos[1]], self.direction + randint(-10, 10))
+        if pygame.time.get_ticks() - self.timer > 500:
+            for i in range(5):
+                game.mob_mgr.new_mob(Bullet, [self.pos[0], self.pos[1]], self.direction + randint(-10, 10))
+            self.timer = pygame.time.get_ticks()
 
     def throw_bomb(self):
         if self.bombs > 0:
