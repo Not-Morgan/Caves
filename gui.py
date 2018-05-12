@@ -28,12 +28,15 @@ grey = (200, 200, 200)
 intro_sound = pygame.mixer.Sound("static/sounds/intro.ogg")
 gameplay_sound = pygame.mixer.Sound("static/sounds/gameplay.ogg")
 button_click = pygame.mixer.Sound("static/sounds/button.ogg")
+game_over = pygame.mixer.Sound("static/sounds/deathmusic.ogg")
 
 # load background image and other screen images
 img = pygame.image.load('static/pictures/caves.jpg')
 help_info = pygame.image.load('static/pictures/help.png')
 credits_info = pygame.image.load('static/pictures/credits.png')
 logo = pygame.image.load('static/pictures/logo.png')
+gameover = pygame.image.load('static/pictures/gameover.jpg')
+gameover = pygame.transform.scale(gameover, (1000, 730))
 
 pygame.display.set_icon(logo)
 

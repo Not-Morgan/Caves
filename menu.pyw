@@ -6,9 +6,11 @@ from gui import *
 # define display and caption
 gameDisplay = game.game_mgr.gameDisplay
 pygame.display.set_caption('Welcome')
+k = 0
 info = False
 credits = False
 started = False
+dead = False
 
 # start intro sound
 intro_sound.set_volume(1.0)                                    
@@ -20,6 +22,7 @@ web_button_pos = [430, 400, 140, 40]
 help_button_pos = [455, 300, 90, 40]
 credits_button_pos = [450, 500, 100, 40]
 back_button_pos = [20, 20, 80, 40]
+main_menu_button_pos = [460, 180, 80, 40]
 
 # Response 2C - Applying Algorithms -> the function draw_menu() is used to repeatedly draw the menus from
 # the algorithms in the GUI file (display_button and center_text)
@@ -27,12 +30,16 @@ back_button_pos = [20, 20, 80, 40]
 
 def draw_menu():
 
+    pygame.display.set_caption('Welcome')
+
     # draws main menu
     global info
     global credits
+    global dead
+    global k
 
     # if started already, don't draw any of the buttons
-    if started:
+    if started or dead:
         return True
 
     gameDisplay.blit(img, (0, 0))
@@ -95,13 +102,23 @@ def draw_menu():
 
 
 def start(i):
-    game.start()
+    global dead
+    global started
+    global k
+
+    global start_button_pos
+    global web_button_pos
+    global help_button_pos
+    global credits_button_pos
+
+    #  game.start()  <- delete this line to properly load menu
     pygame.display.set_caption('Loading Caves! ...')
-    intro_sound.fadeout(1000)
-    if pygame.mixer.get_busy():  # and a certain amount of time has passed
+    intro_sound.fadeout(5000)
+    if pygame.mixer.get_busy() and not dead:  # and a certain amount of time has passed
         gameDisplay.blit(img, (0, (i * -1)/2))
 
         # all of the animation once the button is pressed
+
         animate_button(gameDisplay, start_button_pos, 1, 'Start', green, i)
         animate_button(gameDisplay, help_button_pos, -1, 'Need help?', dim_blue, i)
         animate_button(gameDisplay, web_button_pos, 1, 'Visit us on Github', dim_red, i)
@@ -109,21 +126,52 @@ def start(i):
         animate_text(gameDisplay, [500, 100], 60, 3, "Caves!", white, i, 250)
         animate_text(gameDisplay, [70, 10], 17, -0.5, 'Welcome to Caves!', white, i, 250)
         # display instructions here
+
         # gameDisplay.fill(white) - testing the fill screen, originally stuck in loop, can't update screen
 
-    else:
+    if not pygame.mixer.get_busy() and not dead:
         gameDisplay.fill(black)
-        gameplay_sound.set_volume(1.0)                                    
+        gameplay_sound.set_volume(0.7)
         gameplay_sound.play(-1, fade_ms=500)
         pygame.display.set_caption('CAVES!')
         # print("Game starts") - debug can't start game for some reason
 
         game.start()
-        pygame.quit()
-        quit()
+
+        # code returns here if dead somehow
+        dead = True
+        gameplay_sound.stop()
+
+        game_over.set_volume(1.0)
+        game_over.play(-1, fade_ms=0)
+
+    if dead:
+        gameDisplay.blit(gameover, (0, 0))
+        pygame.display.set_caption('Game Over')
+
+        center_text(gameDisplay, "You have died! I am disappointed in you.", 500, 100, 60, white)
+
+        if display_buttons(gameDisplay, main_menu_button_pos, 'MAIN MENU', green, dim_green):
+
+            button_click.play(1, 0, 0)
+            dead = False
+            started = False
+
+            start_button_pos = [460, 180, 80, 40]
+            web_button_pos = [430, 400, 140, 40]
+            help_button_pos = [455, 300, 90, 40]
+            credits_button_pos = [450, 500, 100, 40]
+
+            game_over.stop()
+            intro_sound.play(-1, 0, 0)
+            k = 0
+
+        if display_buttons(gameDisplay, [455, 300, 90, 40], 'EXIT', red, dim_red):
+            pygame.quit()
+            quit()
 
 
-k = 0
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -161,6 +209,8 @@ while True:
         started = True
         k += 1
         start(k)
+
+    print("dead" + str(dead), "credits" + str(credits), "started" + str(started), "k" + str(k))
 
     # print(info) --testing the info button
     # print(started, pygame.time.get_ticks()) - debug timeloop in function problem

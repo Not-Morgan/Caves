@@ -16,8 +16,7 @@ blue = (0, 0, 255)
 grey = (72, 72, 72)
 
 pygame.init()
-game_over = pygame.mixer.Sound("static/sounds/deathmusic.ogg")
-game_over.set_volume(1.0)
+
 
 
 class GameManager:
@@ -118,9 +117,9 @@ class GameManager:
             self.logic()
 
     def player_death(self):
-        self.gameDisplay.fill(black)
-        game_over.play(-1, 0, 0)
-        gui.center_text(self.gameDisplay, "You have died! I am disappointed in you", 400, 300, 60, white)
+        # self.gameDisplay.fill(black)
+
+        pass
 
     def menu(self, display):
         pygame.draw.rect(display, grey, (800, 0, 200, 200))
