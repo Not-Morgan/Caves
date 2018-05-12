@@ -42,7 +42,7 @@ class GameManager:
 
         mob_mgr.render(self.gameDisplay)
 
-        self.menu(self.gameDisplay)
+        self.menu()
 
         pygame.display.update()
         self.clock.tick(fps)
@@ -100,8 +100,8 @@ class GameManager:
         player.rotate(self.player_rot * 2)
 
         if player.health < 1:
-            self.player_death()
             self.crashed = True
+            player.heath = 100
 
         if not randint(0, 120):
             world_mgr.extend_caves(player.pos)
@@ -117,20 +117,15 @@ class GameManager:
             self.take_input()
             self.logic()
 
-    def player_death(self):
-        # self.gameDisplay.fill(black)
-
-        pass
-
-    def menu(self, display):
-        pygame.draw.rect(display, grey, (800, 0, 200, 200))
-        gui.center_text(display, "Thou hath " + str(player.bombs) + " bombs", 900, 10, 15, white)
-        gui.center_text(display, "Thou hath " + str(player.points) + " points", 900, 30, 15, white)
+    def menu(self):
+        pygame.draw.rect(self.gameDisplay, grey, (800, 0, 200, 200))
+        gui.center_text(self.gameDisplay, "Thou hath " + str(player.bombs) + " bombs", 900, 10, 15, white)
+        gui.center_text(self.gameDisplay, "Thou hath " + str(player.points) + " points", 900, 30, 15, white)
 
         # Health Bar
-        pygame.draw.rect(display, red, (800, 190, 200, 10))
-        pygame.draw.rect(display, green, (800, 190, int(player.health) * 2, 10))
-        gui.center_text(display, "Health Bar", 900, 190, 15, black)
+        pygame.draw.rect(self.gameDisplay, red, (800, 190, 200, 10))
+        pygame.draw.rect(self.gameDisplay, green, (800, 190, int(player.health) * 2, 10))
+        gui.center_text(self.gameDisplay, "Health Bar", 900, 190, 15, black)
 
 
 game_mgr = GameManager()
@@ -143,9 +138,20 @@ def start():
     global world_mgr
     global player
     global mob_mgr
+
+    game_mgr.crashed = False
+
+    world_mgr = None
+    player = None
+    mob_mgr = None
+
     world_mgr = world.WorldManager()
     player = mobs.Player([500, 500])
     mob_mgr = mobs.MobManager()
+
+    mob_mgr.enemies = []
+    mob_mgr.items = []
+
     world_mgr.generate_world()
 
     game_mgr.mainloop()
