@@ -2,6 +2,7 @@ import pygame
 import world
 import mobs
 import gui
+import extra_math as math
 from random import randint
 
 display_height = 700
@@ -39,6 +40,12 @@ class GameManager:
         # draw player
         pygame.draw.circle(self.gameDisplay, blue,
                            [int(player.pos[0] + self.screen_x), int(player.pos[1] + self.screen_y)], 7, 0)
+
+        new_pos = [500, 500]
+        new_pos[0] += math.cos(math.radians(player.direction)) * 12
+        new_pos[1] += math.sin(math.radians(player.direction)) * 12
+
+        pygame.draw.line(self.gameDisplay, blue, [500, 500], new_pos)
 
         mob_mgr.render(self.gameDisplay)
 
