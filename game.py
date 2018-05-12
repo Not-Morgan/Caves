@@ -52,6 +52,8 @@ class GameManager:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # x button is pressed
                 self.crashed = True
+                pygame.quit()
+                quit()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
@@ -123,8 +125,14 @@ class GameManager:
 
     def menu(self, display):
         pygame.draw.rect(display, grey, (800, 0, 200, 200))
-        gui.center_text(display, "Thou hath " + str(player.bombs) + " bombs", 900, 10, 12, white)
-        gui.center_text(display, "Thou hath " + str(player.points) + " points", 900, 30, 12, white)
+        gui.center_text(display, "Thou hath " + str(player.bombs) + " bombs", 900, 10, 15, white)
+        gui.center_text(display, "Thou hath " + str(player.points) + " points", 900, 30, 15, white)
+
+        # Health Bar
+        pygame.draw.rect(display, red, (800, 190, 200, 10))
+        pygame.draw.rect(display, green, (800, 190, int(player.health) * 2, 10))
+        gui.center_text(display, "Health Bar", 900, 190, 15, black)
+
 
 
 game_mgr = GameManager()
