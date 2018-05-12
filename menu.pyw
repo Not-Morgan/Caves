@@ -125,7 +125,8 @@ def start(i):
         animate_button(gameDisplay, web_button_pos, 1, 'Visit us on Github', dim_red, i)
         animate_button(gameDisplay, credits_button_pos, -1, 'Credits', dim_grey, i)
 
-        
+        animate_text(gameDisplay, [500, 30], 20, -1, "Proudly created by Mason and Josh", white, i, 250)
+        animate_text(gameDisplay, [500, 50], 20, -1, "The newer and better Pac-Man", white, i, 250)
         animate_text(gameDisplay, [500, 100], 60, 3, "Caves!", white, i, 250)
         animate_text(gameDisplay, [70, 10], 17, -0.5, 'Welcome to Caves!', white, i, 250)
         # display instructions here
