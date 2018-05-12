@@ -2,6 +2,7 @@ import pygame
 import world
 import mobs
 import gui
+from random import randint
 
 display_height = 700
 display_width = 1000
@@ -98,6 +99,9 @@ class GameManager:
         if player.health < 1:
             self.player_death()
             self.crashed = True
+
+        if not randint(0, 120):
+            world_mgr.extend_caves(player.pos)
 
         mob_mgr.move_all()
 

@@ -66,19 +66,15 @@ class WorldManager:
                 self.make_cave(i, 25, 20)
             self.cave_ends.remove(i)
 
-        new_caves = self.cave_ends
-        for i in new_caves:
-            if randint(0, 1):
-                self.make_cave(i, 25, 20)
-            self.cave_ends.remove(i)
-
-        new_caves = self.cave_ends
-        for i in new_caves:
-            if randint(0, 1):
-                self.make_cave(i, 25, 20)
-            self.cave_ends.remove(i)
         print(len(self.caves), "caves")
         print(len([x for x in game.mob_mgr.items if isinstance(x, Chest)]), "chests")
+
+    def extend_caves(self, pos):
+        new_caves = self.cave_ends
+        for i in [x for x in new_caves if math.hypo(x, pos) < 1000]:
+            if randint(0, 2):
+                self.make_cave(i, 25, 30)
+            self.cave_ends.remove(i)
 
 
 class Chest:
