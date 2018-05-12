@@ -125,7 +125,7 @@ class GameManager:
         # Health Bar
         pygame.draw.rect(self.gameDisplay, red, (800, 190, 200, 10))
         pygame.draw.rect(self.gameDisplay, green, (800, 190, int(player.health) * 2, 10))
-        gui.center_text(self.gameDisplay, "Health Bar", 900, 190, 15, black)
+        gui.center_text(self.gameDisplay, "Health Bar: " + str(player.health) + "%", 900, 190, 15, black)
 
 
 game_mgr = GameManager()

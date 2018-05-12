@@ -51,6 +51,8 @@ def draw_menu():
         center_text(gameDisplay, "Click the button below to Start", 500, 150, 25, white)
 
     center_text(gameDisplay, "Caves!", 500, 100, 50, white)
+    center_text(gameDisplay, "Proudly created by Mason and Josh", 500, 30, 20, white)
+    center_text(gameDisplay, "The newer and better Pac-Man", 500, 50, 20, white)
 
     if display_buttons(gameDisplay, web_button_pos, 'Visit us on Github', red, dim_red):
         button_click.play(1, 0, 0)
@@ -122,6 +124,8 @@ def start(i):
         animate_button(gameDisplay, help_button_pos, -1, 'Need help?', dim_blue, i)
         animate_button(gameDisplay, web_button_pos, 1, 'Visit us on Github', dim_red, i)
         animate_button(gameDisplay, credits_button_pos, -1, 'Credits', dim_grey, i)
+
+        
         animate_text(gameDisplay, [500, 100], 60, 3, "Caves!", white, i, 250)
         animate_text(gameDisplay, [70, 10], 17, -0.5, 'Welcome to Caves!', white, i, 250)
         # display instructions here
@@ -168,7 +172,6 @@ def start(i):
         if display_buttons(gameDisplay, [450, 500, 100, 40], 'EXIT', red, dim_red):
             pygame.quit()
             quit()
-
 
 
 while True:
