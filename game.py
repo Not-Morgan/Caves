@@ -16,8 +16,6 @@ blue = (0, 0, 255)
 grey = (72, 72, 72)
 
 pygame.init()
-game_over = pygame.mixer.Sound("static/sounds/deathmusic.ogg")
-game_over.set_volume(1.0)
 
 
 class GameManager:
@@ -53,6 +51,8 @@ class GameManager:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # x button is pressed
                 self.crashed = True
+                pygame.quit()
+                quit()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
@@ -118,14 +118,19 @@ class GameManager:
             self.logic()
 
     def player_death(self):
-        self.gameDisplay.fill(black)
-        game_over.play(-1, 0, 0)
-        gui.center_text(self.gameDisplay, "You have died! I am disappointed in you", 400, 300, 60, white)
+        # self.gameDisplay.fill(black)
+
+        pass
 
     def menu(self, display):
         pygame.draw.rect(display, grey, (800, 0, 200, 200))
-        gui.center_text(display, "Thou hath " + str(player.bombs) + " bombs", 900, 10, 12, white)
-        gui.center_text(display, "Thou hath " + str(player.points) + " points", 900, 30, 12, white)
+        gui.center_text(display, "Thou hath " + str(player.bombs) + " bombs", 900, 10, 15, white)
+        gui.center_text(display, "Thou hath " + str(player.points) + " points", 900, 30, 15, white)
+
+        # Health Bar
+        pygame.draw.rect(display, red, (800, 190, 200, 10))
+        pygame.draw.rect(display, green, (800, 190, int(player.health) * 2, 10))
+        gui.center_text(display, "Health Bar", 900, 190, 15, black)
 
 
 game_mgr = GameManager()

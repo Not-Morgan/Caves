@@ -8,4 +8,4 @@ A game that will probably include caves
 - Credits/Help/Tutorial - Complete
 - Stats
 - keep track of bombs
-- Points/
+- Points/Status Bar
