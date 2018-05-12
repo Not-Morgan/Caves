@@ -54,12 +54,14 @@ class Enemy(Mob):
         if self.move():
             self.rotate(180)
         if self.health < 1:
+            game.player.add_points(5)
             return False
         return True
 
 
 # 2D - Applying Abstraction
 class Player(Mob):
+    points = 0
     bombs = 10
     speed = 1.5
     health = 100
@@ -98,6 +100,9 @@ class Player(Mob):
 
     def add_bombs(self, amount):
         self.bombs += amount
+
+    def add_points(self, amount):
+        self.points += amount
 
 
 class Bomb(Mob):

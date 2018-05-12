@@ -13,6 +13,7 @@ black = (0, 0, 0)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
+grey = (72, 72, 72)
 
 pygame.init()
 game_over = pygame.mixer.Sound("static/sounds/deathmusic.ogg")
@@ -42,6 +43,8 @@ class GameManager:
                            [int(player.pos[0] + self.screen_x), int(player.pos[1] + self.screen_y)], 7, 0)
 
         mob_mgr.render(self.gameDisplay)
+
+        self.menu(self.gameDisplay)
 
         pygame.display.update()
         self.clock.tick(fps)
@@ -119,9 +122,10 @@ class GameManager:
         game_over.play(-1, 0, 0)
         gui.center_text(self.gameDisplay, "You have died! I am disappointed in you", 400, 300, 60, white)
 
-    def sidebar(self):
-        pygame.draw.rect(self.gameDisplay, white, (800, 0, 200, 200), width=5)
-        gui.center_text(self.gameDisplay, "Thou hath" + player.bombs + "bombs", 900, 10, 12, white)
+    def menu(self, display):
+        pygame.draw.rect(display, grey, (800, 0, 200, 200))
+        gui.center_text(display, "Thou hath " + str(player.bombs) + " bombs", 900, 10, 12, white)
+        gui.center_text(display, "Thou hath " + str(player.points) + " points", 900, 30, 12, white)
 
 
 game_mgr = GameManager()
