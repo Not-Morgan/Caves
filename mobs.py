@@ -49,6 +49,8 @@ class Enemy(Mob):
                 game.player.change_health(-1)
                 if self.move(self.speed * -1):
                     self.rotate(180)
+        if math.hypo(self.pos, game.player.pos) > 1000:
+            return False
         else:
             self.rotate(randint(-10, 10))
         if self.move():
@@ -168,6 +170,14 @@ class MobManager:
         for i in self.enemies:
             if not i.exist():
                 self.enemies.remove(i)
+
+        if len(self.enemies) < 20:
+            while True:
+                help_me = game.world_mgr.caves[randint(0, len(game.world_mgr.caves) - 1)][0]
+                pos = [help_me[0], help_me[1]]
+                if math.hypo(pos, game.player.pos) < 700:
+                    self.new_mob(Enemy, pos)
+                    break
 
     def new_mob(self, mob, *args):
         # decide if it is an enemy or item and add it to a list
