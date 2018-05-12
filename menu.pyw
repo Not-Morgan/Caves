@@ -22,7 +22,6 @@ web_button_pos = [430, 400, 140, 40]
 help_button_pos = [455, 300, 90, 40]
 credits_button_pos = [450, 500, 100, 40]
 back_button_pos = [20, 20, 80, 40]
-main_menu_button_pos = [460, 180, 80, 40]
 
 # Response 2C - Applying Algorithms -> the function draw_menu() is used to repeatedly draw the menus from
 # the algorithms in the GUI file (display_button and center_text)
@@ -151,7 +150,7 @@ def start(i):
 
         center_text(gameDisplay, "You have died! I am disappointed in you.", 500, 100, 60, white)
 
-        if display_buttons(gameDisplay, main_menu_button_pos, 'MAIN MENU', green, dim_green):
+        if display_buttons(gameDisplay, [455, 300, 90, 40], 'MAIN MENU', green, dim_green):
 
             button_click.play(1, 0, 0)
             dead = False
@@ -166,7 +165,7 @@ def start(i):
             intro_sound.play(-1, 0, 0)
             k = 0
 
-        if display_buttons(gameDisplay, [455, 300, 90, 40], 'EXIT', red, dim_red):
+        if display_buttons(gameDisplay, [450, 500, 100, 40], 'EXIT', red, dim_red):
             pygame.quit()
             quit()
 
@@ -210,7 +209,7 @@ while True:
         k += 1
         start(k)
 
-    print("dead" + str(dead), "credits" + str(credits), "started" + str(started), "k" + str(k))
+    # print("dead" + str(dead), "credits" + str(credits), "started" + str(started), "k" + str(k))
 
     # print(info) --testing the info button
     # print(started, pygame.time.get_ticks()) - debug timeloop in function problem
