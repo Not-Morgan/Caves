@@ -50,6 +50,7 @@ class Enemy(Mob):
                 if self.move(self.speed * -1):
                     self.rotate(180)
         if math.hypo(self.pos, game.player.pos) > 1000:
+            print("[mob_mgr] enemy despawned")
             return False
         else:
             self.rotate(randint(-10, 10))
@@ -57,6 +58,8 @@ class Enemy(Mob):
             self.rotate(180)
         if self.health < 1:
             game.player.add_points(5)
+            print("[mob_mgr] enemy died")
+
             return False
         return True
 

@@ -21,7 +21,7 @@ class WorldManager:
     def make_cave(self, start_pos, size, length, direction=randint(0, 360)):
         if length == 0:
             self.cave_ends.append(start_pos)
-            print("[too short]", length)
+            # print("[world gen] cave too short")
             return
 
         new_pos = [start_pos[0], start_pos[1]]
@@ -29,13 +29,13 @@ class WorldManager:
         new_pos[1] += math.sin(math.radians(direction)) * size * 0.75
 
         if math.in_circles(new_pos, self.caves):
-            print("[collision]", length)
+            # print("[world gen] cave collision len ", length)
             return
 
         self.add_hole([start_pos[0], start_pos[1]], size)
         if not randint(0, 70):
             game.mob_mgr.new_mob(Chest, start_pos, {"bombs": randint(1, 8), "points": randint(1, 8)})
-            print("[new chest]")
+            # print("[world gen] new chest")
 
         # print("{}\n{}\n{}\n{}\n---------".format(start_pos, new_pos, length, direction))
 
@@ -51,7 +51,7 @@ class WorldManager:
             new_pos[1] += math.sin(math.radians(new_dir)) * size * 0.9
 
             self.make_cave(new_pos, size, length - 1, new_dir)
-            print("[new split]", length)
+            print("[world gen] new cave", length)
 
     def generate_world(self):
         self.make_cave([500, 500], 25, 40)
@@ -66,8 +66,8 @@ class WorldManager:
                 self.make_cave(i, 25, 20)
             self.cave_ends.remove(i)
 
-        print(len(self.caves), "caves")
-        print(len([x for x in game.mob_mgr.items if isinstance(x, Chest)]), "chests")
+        print("[world gen]", len(self.caves), "caves")
+        print("[world gen]", len([x for x in game.mob_mgr.items if isinstance(x, Chest)]), "chests")
 
     def extend_caves(self, pos):
         new_caves = self.cave_ends
