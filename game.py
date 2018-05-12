@@ -18,7 +18,6 @@ grey = (72, 72, 72)
 pygame.init()
 
 
-
 class GameManager:
     player_rot = 0
     player_mov = 0
@@ -132,7 +131,6 @@ class GameManager:
         pygame.draw.rect(display, red, (800, 190, 200, 10))
         pygame.draw.rect(display, green, (800, 190, int(player.health) * 2, 10))
         gui.center_text(display, "Health Bar", 900, 190, 15, black)
-
 
 
 game_mgr = GameManager()
