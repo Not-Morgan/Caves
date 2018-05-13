@@ -34,6 +34,8 @@ class Mob:
 
     def change_health(self, amount):
         self.health += amount
+        if self.health > 100:
+            self.health = 100
 
 
 class Enemy(Mob):
