@@ -54,6 +54,7 @@ class WorldManager:
             self.make_cave(new_pos, size, length - 1, new_dir)
             print("[world gen] new cave", length)
 
+    #2C
     def generate_world(self):
         self.make_cave([500, 500], 25, 40)
         self.make_cave([0, 0], 25, 40)
