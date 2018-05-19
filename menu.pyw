@@ -135,7 +135,7 @@ def start(i):
 
     if not pygame.mixer.get_busy() and not dead:
         gameDisplay.fill(black)
-        gameplay_sound.set_volume(0.7)
+        gameplay_sound.set_volume(0.5)
         gameplay_sound.play(-1, fade_ms=500)
         pygame.display.set_caption('CAVES!')
         # print("Game starts") - debug can't start game for some reason
@@ -146,7 +146,7 @@ def start(i):
         dead = True
         gameplay_sound.stop()
 
-        game_over.set_volume(1.0)
+        game_over.set_volume(1.3)
         game_over.play(-1, fade_ms=0)
 
     if dead:

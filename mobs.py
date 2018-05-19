@@ -52,7 +52,7 @@ class Enemy(Mob):
                 if self.move(self.speed * -1):
                     self.rotate(180)
         if math.hypo(self.pos, game.player.pos) > 1000:
-            print("[mob_mgr] enemy despawned")
+            # print("[mob_mgr] enemy despawned")
             return False
         else:
             self.rotate(randint(-10, 10))
@@ -60,13 +60,14 @@ class Enemy(Mob):
             self.rotate(180)
         if self.health < 1:
             game.player.add_points(5)
-            print("[mob_mgr] enemy died")
+            # print("[mob_mgr] enemy died")
 
             return False
         return True
 
 
-# 2D - Applying Abstraction
+# 2D - Applying Abstraction -> allowed player object to have attributes that can accessible from other files and
+# simplified the process of running the game
 class Player(Mob):
     points = 0
     bombs = 10

@@ -52,7 +52,7 @@ class WorldManager:
             new_pos[1] += math.sin(math.radians(new_dir)) * size * 0.9
 
             self.make_cave(new_pos, size, length - 1, new_dir)
-            print("[world gen] new cave", length)
+            # print("[world gen] new cave", length)
 
     def generate_world(self):
         self.make_cave([500, 500], 25, 40)
@@ -67,8 +67,8 @@ class WorldManager:
                 self.make_cave(i, 25, 20)
             self.cave_ends.remove(i)
 
-        print("[world gen]", len(self.caves), "caves")
-        print("[world gen]", len([x for x in game.mob_mgr.items if isinstance(x, Chest)]), "chests")
+        # print("[world gen]", len(self.caves), "caves")
+        # print("[world gen]", len([x for x in game.mob_mgr.items if isinstance(x, Chest)]), "chests")
 
     def extend_caves(self, pos):
         new_caves = self.cave_ends

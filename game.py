@@ -65,7 +65,7 @@ class GameManager:
                 if event.key == pygame.K_p:
                     mob_mgr.new_mob(world.Chest, [pygame.mouse.get_pos()[0] - self.screen_x,
                                                   pygame.mouse.get_pos()[1] - self.screen_y], {"bombs": 5})
-                    print(player.bombs)
+                    # print(player.bombs)
                 if event.key == pygame.K_c:
                     mob_mgr.new_mob(mobs.Enemy, [pygame.mouse.get_pos()[0] - self.screen_x,
                                                  pygame.mouse.get_pos()[1] - self.screen_y])
